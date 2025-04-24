@@ -1,15 +1,12 @@
-﻿namespace webapi.Services
+public class HelloWorldService : IHelloWorldService
 {
-    public class HelloWorldService : IHelloWorldService
+    public string GetHelloWorld()
     {
-        public string GetHelloWorld()
-        {
-            return "HelloWorld";
-        }
+        return "Hello World!";
     }
+}
 
-    public interface IHelloWorldService
-    {
-        string GetHelloWorld();
-    }
+public interface IHelloWorldService
+{
+    string GetHelloWorld();
 }
