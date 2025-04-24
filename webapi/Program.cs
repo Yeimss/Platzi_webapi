@@ -1,3 +1,4 @@
+using webapi;
 using webapi.Middlewares;
 using webapi.Services;
 
@@ -8,6 +9,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSqlServer<TareasContext>(connectionString: builder.Configuration.GetConnectionString("srvLocal"));
 builder.Services.AddScoped<IHelloWorldService, HelloWorldService>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<ITareasService, TareasService>();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using webapi.Services;
 
 namespace webapi.Controllers
@@ -9,10 +10,12 @@ namespace webapi.Controllers
     {
         public readonly IHelloWorldService _helloWorldService;
         public readonly ILogger<HelloWorldController> _logger;
-        public HelloWorldController(IHelloWorldService helloWorldService, ILogger<HelloWorldController> logger)
+        public readonly TareasContext dbcontext;
+        public HelloWorldController(IHelloWorldService helloWorldService, ILogger<HelloWorldController> logger, TareasContext dbcontext)
         {
             _helloWorldService = helloWorldService;
             _logger = logger;
+            this.dbcontext = dbcontext;
         }
         [HttpGet]
         [Route("HelloWorld")]
@@ -35,6 +38,14 @@ namespace webapi.Controllers
                     message = "Error inesperado"
                 });
             }
+        }
+        [HttpGet]
+        [Route("createdb")]
+        public IActionResult CreateDatabase()
+        {
+            dbcontext.Database.EnsureCreated();
+
+            return Ok();
         }
     }
 }
