@@ -8,18 +8,33 @@ namespace webapi.Controllers
     public class HelloWorldController : ControllerBase
     {
         public readonly IHelloWorldService _helloWorldService;
-        public HelloWorldController(IHelloWorldService helloWorldService)
+        public readonly ILogger<HelloWorldController> _logger;
+        public HelloWorldController(IHelloWorldService helloWorldService, ILogger<HelloWorldController> logger)
         {
             _helloWorldService = helloWorldService;
+            _logger = logger;
         }
         [HttpGet]
         [Route("HelloWorld")]
         public async Task<IActionResult> HelloWorld()
         {
-            return Ok(new
+            try
             {
-                message = _helloWorldService.GetHelloWorld()
-            });
+                _logger.LogInformation("Log por consola de prueba");
+                //int z = 8 / 0;
+                return Ok(new
+                {
+                    message = _helloWorldService.GetHelloWorld()
+                });
+            }
+            catch (Exception)
+            {
+                _logger.LogWarning("Errrrrroooooorrrrrrrr");
+                return BadRequest(new
+                {
+                    message = "Error inesperado"
+                });
+            }
         }
     }
 }
